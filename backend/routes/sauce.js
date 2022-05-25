@@ -12,11 +12,11 @@ const sauceCtrl = require('../controllers/sauce');
 
 //configuration de notre router avec les routes de lapplication
 //les routes sont toutes securisés avec auth,et multer pour la gestion de file dans le repertoire images
-router.get('/',auth, sauceCtrl.getAllSauces);
-router.get('/:id',auth, sauceCtrl.getOneSauce);
+router.get('/',auth,sauceCtrl.getAllSauces);
+router.get('/:id',auth,sauceCtrl.getOneSauce);
 router.post('/',auth,multer,sauceCtrl.createSauce);
-router.put('/:id',auth,multer, sauceCtrl.modifySauce);
-router.delete('/:id',auth, sauceCtrl.deleteSauce);
+router.put('/:id',auth,multer,sauceCtrl.modifySauce);
+router.delete('/:id',auth,sauceCtrl.deleteSauce);
 router.post('/:id/like',auth,sauceCtrl.likeSauce);
 
 //export du module router

@@ -1,6 +1,8 @@
 //import du module jsonwebtoken
 const jwt = require('jsonwebtoken');
 
+const User = require('../models/user');
+
 /**
  * Permet de verfifier pour chaque request envoyer headers authorization 
  * le token avec userId dans la requette si le userId est le meme que celui du token on continue avec
@@ -13,13 +15,16 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.JWTPASS);
-    const userId = decodedToken.userId;
-    if (req.body.userId && req.body.userId !== userId) {
-      throw 'Invalid utilisateur ID';
-    } else {
+    const userIdToken = decodedToken.userId;
+
+    User.findOne({_id :userIdToken})
+     .then(user=>{
+      req.user = userIdToken;
       next();
+     })
+     .catch(error => res.status(500).json({error}) );
     }
-  } catch {
-    res.status(401).json({error: new Error('Invalid request!')});
-  }
-};
+    catch {
+       res.status(401).json({message : "Problèmes d'authentification"});
+    }
+  };
