@@ -127,7 +127,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-
+//OK
 /**
  * A partir de la valeur like dans la request :0,1,-1 on choit l'action a realiser (annuler,liker,dislike)
  * a partir de id de la sauce on regarde si elle existe apres selon la valeur de like on realise l'action souhaité
@@ -136,11 +136,12 @@ exports.deleteSauce = (req, res, next) => {
  * @param {middleware} next 
  */
 exports.likeSauce = (req, res, next) => {
+
    Sauce.findOne({_id : req.params.id})
     .then(sauce => {
       const id=req.body.userId; 
 
-      if(req.body.like === 1){                   
+      if(req.body.like === 1){
          if(sauce.usersLiked.length>0 && !sauce.usersLiked.includes(id)){
             sauce.usersLiked.push(id);
             sauce.likes = sauce.likes +1 ;
@@ -194,7 +195,7 @@ exports.likeSauce = (req, res, next) => {
       };
 
       Sauce.updateOne({ _id: req.params.id }, { ...sauceObj, _id: req.params.id })
-       .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+       .then(() => res.status(200).json({ message: 'Sauce modifiée !'}))
        .catch(error => res.status(400).json({ error }));
     })
     .catch(error => res.status(500).json({error}));
