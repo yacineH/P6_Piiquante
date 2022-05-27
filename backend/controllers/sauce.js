@@ -3,7 +3,7 @@ const Sauce = require('../models/sauce');
 //import du module fs (file system)
 const fs= require('fs');
 
-//OK
+
 /**
  * Renvoie un tableau avec toutes les sauces stockés en base
  * @param {request} req 
@@ -16,7 +16,7 @@ exports.getAllSauces = (req, res, next) => {
       .catch(error => res.status(400).json({ error }));
 };
 
-//OK
+
 /**
  * Renvoi la sauce a partir de son params id dans la request
  * @param {request} req 
@@ -34,7 +34,7 @@ exports.getOneSauce = (req, res, next) => {
     }
 };
 
-//ok
+
 /**
  * Enregistre la sauce en base avec initialisation des proprietes de la sauce 
  * definition du chemin dans imageUrl
@@ -57,7 +57,7 @@ exports.createSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-//OK
+
 /**
  * Met a jour la sauce,verifie dans la request la presance ou pas d'un fichier
  * sans file donc les infos sont dans le body avec sauce en json
@@ -93,13 +93,13 @@ exports.modifySauce = (req, res, next) => {
       }
     }
     else{
-      res.status(400).json({message: 'Opération non autorisée!'});
+      res.status(403).json({message: 'Opération non autorisée!'});
     }
   })
   .catch(error => res.status(500).json({ error }));
 };
 
-//OK
+
 /**
  * Supprime la sauce a partir de l'id de la request
  * verifie si le user qui envoi la request est bien le createur de la sauce
@@ -121,13 +121,13 @@ exports.deleteSauce = (req, res, next) => {
         });
       }
       else{
-        res.status(400).json({message:'Opération non autorisée!'});
+        res.status(403).json({message:'Opération non autorisée!'});
       }
     })
     .catch(error => res.status(500).json({ error }));
 };
 
-//OK
+
 /**
  * A partir de la valeur like dans la request :0,1,-1 on choit l'action a realiser (annuler,liker,dislike)
  * a partir de id de la sauce on regarde si elle existe apres selon la valeur de like on realise l'action souhaité
